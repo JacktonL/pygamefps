@@ -54,6 +54,21 @@ class Room:
         self.grid = list(np.multiply(np.array(Room.grid), self.mul))
         self.cont = self.grid
 
+    def draw(self):
+        x = 0
+        glLineWidth(5)
+        glBegin(GL_LINES)
+        for edge in self.edges:
+            if x < 3:
+                glColor3f(self.colors[x][0], self.colors[x][1], self.colors[x][2])
+            else:
+                glColor3f(1, 1, 1)
+            for vertex in edge:
+                glVertex3fv(self.grid[vertex])
+            x += 1
+
+        glEnd()
+
     def rotateworld(self, anglex, angley):
         buffer = glGetDoublev(GL_MODELVIEW_MATRIX)
         c = (-1 * np.mat(buffer[:3, :3]) * np.mat(buffer[3, :3]).T).reshape(3, 1)
