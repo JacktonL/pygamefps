@@ -1,4 +1,6 @@
 import numpy as np
+from OpenGL.GL import *
+from math import atan2
 
 
 class Room:
@@ -51,3 +53,13 @@ class Room:
         self.edges = Room.edges
         self.grid = list(np.multiply(np.array(Room.grid), self.mul))
         self.cont = self.grid
+
+    def rotateworld(self, anglex, angley):
+        buffer = glGetDoublev(GL_MODELVIEW_MATRIX)
+        c = (-1 * np.mat(buffer[:3, :3]) * np.mat(buffer[3, :3]).T).reshape(3, 1)
+        glTranslate(c[0], c[1], c[2])
+        m = buffer.flatten()
+        glRotate(anglex, m[1], m[5], m[9])  # [1]
+        glRotate(angley, m[0], m[4], m[8])  # [1]
+        glRotate(atan2(-m[4], m[5]) * 57.29577, m[2], m[6], m[10])
+        glTranslate(-c[0], -c[1], -c[2])
