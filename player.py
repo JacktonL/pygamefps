@@ -12,7 +12,7 @@ class Player(Room):
         self.pos = [0, self.starty, 0]
         self.jumpvel = 20
         self.relvel = self.jumpvel
-        gluPerspective(fov, (display[0] / display[1]), 0.1, 2500)
+        gluPerspective(fov, (display[0] / display[1]), 0.1, 5000)
         glTranslatef(0, -self.starty, 0)
         Room.__init__(self)
 
@@ -23,9 +23,9 @@ class Player(Room):
     def checkwall(self):
 
         k = [False, False]
-        if -self.mul < self.pos[0] < self.mul:
+        if -self.mulx < self.pos[0] < self.mulx:
             k[0] = True
-        if -self.mul < self.pos[2] < self.mul:
+        if -self.mulz < self.pos[2] < self.mulz:
             k[1] = True
 
         return k
