@@ -3,6 +3,8 @@ from pygame.locals import *
 from OpenGL.GL import *
 from room import Room
 from player import Player
+import numpy as np
+
 
 def main():
     pygame.init()
@@ -19,6 +21,7 @@ def main():
     wall = True
     sens = 0.25
     vel = 3.5
+    c = 0
 
     while exit:
         clock.tick(60)
@@ -57,12 +60,18 @@ def main():
             exit = False
         if player.pos[1] == player.starty:
             if keys[pygame.K_SPACE]:
-                glTranslatef(0, -0.1, 0)
+                glTranslatef(0, 0.1, 0)
                 player.pos[1] += 0.1
 
         if player.pos[1] > player.starty:
-            player.gravity()
-
+            array = np.linspace(-1, 1)
+            player.gravity(array[c])
+            c += 1
+            if c == len(array):
+                d = abs(player.pos[1] - player.starty)
+                glTranslatef(0, -d, 0)
+                player.pos[1] = player.starty
+                c = 0
         if wall:
             room.rotateworld(mouse_dx*sens, mouse_dy*sens)
         wall = True
