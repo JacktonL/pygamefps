@@ -25,12 +25,10 @@ class Room:
             list(zip(np.linspace(-1, 1, 10), [1 for k in range(10)], [-1 for l in range(10)])),
             list(zip([-1 for m in range(10)], [1 for n in range(10)], np.linspace(-1, 1, 10))),
             list(zip(np.linspace(-1, 1, 10), [1 for o in range(10)], [1 for p in range(10)])),
-            list(zip([1 for q in range(10)], np.linspace(-1, 1, 10), [1 for r in range(10)])),
-            list(zip([1 for s in range(10)], np.linspace(-1, 1, 10), [-1 for t in range(10)])),
-            list(zip([-1 for u in range(10)], np.linspace(-1, 1, 10), [-1 for v in range(10)])),
-            list(zip([-1 for w in range(10)], np.linspace(-1, 1, 10), [1 for x in range(10)]))]
-
-    meshedges = [i for i in range(8)]
+            list(zip([1 for q in range(10)], np.linspace(0, 1, 10), [1 for r in range(10)])),
+            list(zip([1 for s in range(10)], np.linspace(0, 1, 10), [-1 for t in range(10)])),
+            list(zip([-1 for u in range(10)], np.linspace(0, 1, 10), [-1 for v in range(10)])),
+            list(zip([-1 for w in range(10)], np.linspace(0, 1, 10), [1 for x in range(10)]))]
 
     colors = [
         (1, 0, 0),
@@ -63,8 +61,8 @@ class Room:
     )
 
     def __init__(self):
-        print(Room.mesh)
         self.mul = 800
+        self.mesh = list(np.multiply(np.array(Room.mesh), self.mul))
         self.colors = Room.colors
         self.edges = Room.edges
         self.grid = list(np.multiply(np.array(Room.grid), self.mul))
@@ -84,6 +82,32 @@ class Room:
             x += 1
 
         glEnd()
+
+    def drawroom(self):
+        glLineWidth(5)
+        glBegin(GL_LINES)
+        Room.surface(self, 0, 2, (0, 0, 1))
+        Room.surface(self, 1, 3, (0, 0, 1))
+        Room.surface(self, 0, 4, (0, 1, 0))
+        Room.surface(self, 1, 5, (0, 1, 0))
+        Room.surface(self, 2, 6, (0, 1, 0))
+        Room.surface(self, 3, 7, (0, 1, 0))
+        Room.surface(self, 4, 6, (1, 0, 0))
+        Room.surface(self, 5, 7, (1, 0, 0))
+        Room.surface(self, 8, 9, (0, 1, 0))
+        Room.surface(self, 9, 10, (0, 1, 0))
+        Room.surface(self, 10, 11, (0, 1, 0))
+        Room.surface(self, 11, 8, (0, 1, 0))
+
+
+
+        glEnd()
+
+    def surface(self, e1, e2, color):
+        glColor3fv(color)
+        for i in range(10):
+            for j in (e1, e2):
+                glVertex3fv(self.mesh[j][i])
 
     def rotateworld(self, anglex, angley):
         buffer = glGetDoublev(GL_MODELVIEW_MATRIX)

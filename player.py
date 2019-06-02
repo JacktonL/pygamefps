@@ -8,7 +8,7 @@ class Player(Room):
 
     def __init__(self, display=(1, 1), fov=90):
         self.buffer = 2
-        self.starty = 10
+        self.starty = 200
         self.pos = [0, self.starty, 0]
         self.jumpvel = 20
         self.relvel = self.jumpvel

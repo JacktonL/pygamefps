@@ -20,7 +20,7 @@ def main():
     exit = True
     wall = True
     sens = 0.25
-    vel = 3.5
+    vel = 8
     c = 0
 
     while exit:
@@ -106,7 +106,7 @@ def main():
             wall = False
         print(player.pos)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        room.draw()
+        room.drawroom()
         pygame.display.flip()
 
 
