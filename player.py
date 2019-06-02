@@ -7,9 +7,10 @@ from OpenGL.GLU import *
 class Player(Room):
 
     def __init__(self, display=(1, 1), fov=90):
+        self.buffer = 2
         self.starty = 10
         self.pos = [0, self.starty, 0]
-        self.jumpvel = 10
+        self.jumpvel = 20
         self.relvel = self.jumpvel
         gluPerspective(fov, (display[0] / display[1]), 0.1, 2500)
         glTranslatef(0, -self.starty, 0)

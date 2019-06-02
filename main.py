@@ -45,16 +45,33 @@ def main():
                 player.pos[2] += fwd*m[10] + strafe*m[8]
             else:
                 if not player.checkwall()[0]:
-                    glTranslatef(-player.pos[0]*0.001, 0, fwd * m[10])
-                    glTranslatef(-player.pos[0]*0.001, 0, strafe * m[8])
-                    player.pos[0] += 2*(-player.pos[0]*0.001)
-                    player.pos[2] += fwd * m[10] + strafe * m[8]
+                    if player.pos[0] > player.mul:
+                        d = player.pos[0] - player.mul
+                        glTranslatef(-d - player.buffer, 0, fwd * m[10])
+                        glTranslatef(0, 0, strafe * m[8])
+                        player.pos[0] = player.mul - player.buffer
+                        player.pos[2] += fwd * m[10] + strafe * m[8]
+                    elif player.pos[0] < -player.mul:
+                        d = player.pos[0] + player.mul
+                        glTranslatef(-d + player.buffer, 0, fwd * m[10])
+                        glTranslatef(0, 0, strafe * m[8])
+                        player.pos[0] = -player.mul + player.buffer
+                        player.pos[2] += fwd * m[10] + strafe * m[8]
 
                 elif not player.checkwall()[1]:
-                    glTranslatef(fwd * m[2], 0, -player.pos[2]*0.001)
-                    glTranslatef(strafe * m[0], 0, -player.pos[2]*0.001)
-                    player.pos[0] += fwd * m[2] + strafe * m[0]
-                    player.pos[2] += 2*(-player.pos[2]*0.001)
+                    if player.pos[2] > player.mul:
+                        d = player.pos[2] - player.mul
+                        glTranslatef(fwd * m[2], 0, -d-player.buffer)
+                        glTranslatef(strafe * m[0], 0, 0)
+                        player.pos[0] += fwd * m[2] + strafe * m[0]
+                        player.pos[2] = player.mul - player.buffer
+                    elif player.pos[2] < -player.mul:
+                        d = player.pos[2] + player.mul
+                        glTranslatef(fwd * m[2], 0, -d+player.buffer)
+                        glTranslatef(strafe * m[0], 0, 0)
+                        player.pos[0] += fwd * m[2] + strafe * m[0]
+                        player.pos[2] = -player.mul+player.buffer
+
 
         if keys[pygame.K_ESCAPE]:
             exit = False

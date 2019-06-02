@@ -17,6 +17,21 @@ class Room:
 
     ]
 
+    mesh = [list(zip([1 for a in range(10)], [0 for b in range(10)], np.linspace(-1, 1, 10))),
+            list(zip(np.linspace(-1, 1, 10), [0 for c in range(10)], [-1 for d in range(10)])),
+            list(zip([-1 for e in range(10)], [0 for f in range(10)], np.linspace(-1, 1, 10))),
+            list(zip(np.linspace(-1, 1, 10), [0 for g in range(10)], [1 for h in range(10)])),
+            list(zip([1 for i in range(10)], [1 for j in range(10)], np.linspace(-1, 1, 10))),
+            list(zip(np.linspace(-1, 1, 10), [1 for k in range(10)], [-1 for l in range(10)])),
+            list(zip([-1 for m in range(10)], [1 for n in range(10)], np.linspace(-1, 1, 10))),
+            list(zip(np.linspace(-1, 1, 10), [1 for o in range(10)], [1 for p in range(10)])),
+            list(zip([1 for q in range(10)], np.linspace(-1, 1, 10), [1 for r in range(10)])),
+            list(zip([1 for s in range(10)], np.linspace(-1, 1, 10), [-1 for t in range(10)])),
+            list(zip([-1 for u in range(10)], np.linspace(-1, 1, 10), [-1 for v in range(10)])),
+            list(zip([-1 for w in range(10)], np.linspace(-1, 1, 10), [1 for x in range(10)]))]
+
+    meshedges = [i for i in range(8)]
+
     colors = [
         (1, 0, 0),
         (0, 1, 0),
@@ -48,6 +63,7 @@ class Room:
     )
 
     def __init__(self):
+        print(Room.mesh)
         self.mul = 800
         self.colors = Room.colors
         self.edges = Room.edges
