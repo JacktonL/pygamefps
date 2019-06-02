@@ -1,10 +1,8 @@
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
-from OpenGL.GLU import *
-import numpy
-from math import radians as rad
-from math import sin, cos, sqrt, atan2
+from room import Room
+from player import Player
 
 
 class Game:
@@ -97,16 +95,6 @@ class Game:
             k[1] = True
         return k
 
-    def gravity(self):
-
-        d = self.pos[2] - self.starty
-        self.jumpvel = sqrt(self.relvel**2 - 2*d*10)
-        self.pos[1] += self.jumpvel
-        if self.pos[1] < self.starty:
-            self.jumpvel = 3
-            glTranslatef(0, -abs(self.pos[1] - self.starty))
-            self.pos[1] += abs(self.pos[1] - self.starty)
-
 
 def main():
     pygame.init()
@@ -115,19 +103,16 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     pygame.event.set_grab(True)
     pygame.mouse.set_pos(size / 2, size / 2)
-    gluPerspective(90, (display[0]/display[1]), 0.1, 2500)
-    starty = 10
-    p = Game(starty, 800)
-    glTranslatef(0, -starty, 0)
+    room = Room()
+    player = Player()
 
     clock = pygame.time.Clock()
     exit = True
     wall = True
     sens = 0.25
     vel = 3.5
-    pause = True
 
-    while exit and pause:
+    while exit:
         clock.tick(60)
         for event in pygame.event.get():
 
@@ -142,36 +127,36 @@ def main():
         strafe = vel * (keys[K_a]-keys[K_d])
         if abs(fwd) or abs(strafe):
             m = glGetDoublev(GL_MODELVIEW_MATRIX).flatten()
-            if p.checkwall()[0] and p.checkwall()[1]:
+            if player.checkwall()[0] and player.checkwall()[1]:
                 glTranslatef(fwd*m[2], 0, fwd*m[10])
                 glTranslatef(strafe*m[0], 0, strafe*m[8])
-                p.pos[0] += fwd*m[2] + strafe*m[0]
-                p.pos[2] += fwd*m[10] + strafe*m[8]
+                player.pos[0] += fwd*m[2] + strafe*m[0]
+                player.pos[2] += fwd*m[10] + strafe*m[8]
             else:
-                if not p.checkwall()[0]:
-                    glTranslatef(-p.pos[0]*0.001, 0, fwd * m[10])
-                    glTranslatef(-p.pos[0]*0.001, 0, strafe * m[8])
-                    p.pos[0] += 2*(-p.pos[0]*0.001)
-                    p.pos[2] += fwd * m[10] + strafe * m[8]
+                if not player.checkwall()[0]:
+                    glTranslatef(-player.pos[0]*0.001, 0, fwd * m[10])
+                    glTranslatef(-player.pos[0]*0.001, 0, strafe * m[8])
+                    player.pos[0] += 2*(-player.pos[0]*0.001)
+                    player.pos[2] += fwd * m[10] + strafe * m[8]
 
-                elif not p.checkwall()[1]:
-                    glTranslatef(fwd * m[2], 0, -p.pos[2]*0.001)
-                    glTranslatef(strafe * m[0], 0, -p.pos[2]*0.001)
-                    p.pos[0] += fwd * m[2] + strafe * m[0]
-                    p.pos[2] += 2*(-p.pos[2]*0.001)
+                elif not player.checkwall()[1]:
+                    glTranslatef(fwd * m[2], 0, -player.pos[2]*0.001)
+                    glTranslatef(strafe * m[0], 0, -player.pos[2]*0.001)
+                    player.pos[0] += fwd * m[2] + strafe * m[0]
+                    player.pos[2] += 2*(-player.pos[2]*0.001)
 
         if keys[pygame.K_ESCAPE]:
             exit = False
-        if p.pos[1] == p.starty:
+        if player.pos[1] == player.starty:
             if keys[pygame.K_SPACE]:
                 glTranslatef(0, -0.1, 0)
-                p.pos[1] += 0.1
+                player.pos[1] += 0.1
 
-        if p.pos[1] > p.starty:
-            p.gravity()
+        if player.pos[1] > player.starty:
+            player.gravity()
 
         if wall:
-            p.rotateworld(mouse_dx*sens, mouse_dy*sens)
+            room.rotateworld(mouse_dx*sens, mouse_dy*sens)
         wall = True
         if mousepos[0] <= 1:
             pygame.mouse.set_pos(size, mousepos[1])
@@ -185,12 +170,13 @@ def main():
         if mousepos[1] >= size-1:
             pygame.mouse.set_pos(mousepos[0], 0)
             wall = False
-        print(p.pos)
+        print(player.pos)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        p.draw()
+        room.draw()
         pygame.display.flip()
 
 
-main()
-pygame.quit()
-quit()
+if __name__ == "__main__":
+    main()
+    pygame.quit()
+    quit()
