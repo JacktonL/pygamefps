@@ -90,6 +90,7 @@ class Room:
     def drawroom(self):
         glLineWidth(3)
         glBegin(GL_LINES)
+
         Room.surface(self, 0, 2, (0, 0, 1))
         Room.surface(self, 1, 3, (0, 0, 1))
         Room.surface(self, 0, 4, (0, 1, 0))
@@ -102,8 +103,6 @@ class Room:
         Room.surface(self, 9, 10, (0, 1, 0))
         Room.surface(self, 10, 11, (0, 1, 0))
         Room.surface(self, 11, 8, (0, 1, 0))
-
-
 
         glEnd()
 

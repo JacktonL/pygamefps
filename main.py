@@ -3,6 +3,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from room import Room
 from player import Player
+from pyramid import Pyramid
 import numpy as np
 
 
@@ -15,6 +16,7 @@ def main():
     pygame.mouse.set_pos(size / 2, size / 2)
     room = Room()
     player = Player()
+    pyramid = Pyramid()
 
     clock = pygame.time.Clock()
     exit = True
@@ -72,9 +74,9 @@ def main():
                         player.pos[0] += fwd * m[2] + strafe * m[0]
                         player.pos[2] = -player.mulz+player.buffer
 
-
         if keys[pygame.K_ESCAPE]:
             exit = False
+
         if player.pos[1] == player.starty:
             if keys[pygame.K_SPACE]:
                 glTranslatef(0, 0.1, 0)
@@ -104,10 +106,11 @@ def main():
         if mousepos[1] >= size-1:
             pygame.mouse.set_pos(mousepos[0], 0)
             wall = False
-        print(player.pos)
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         room.drawroom()
         room.draw()
+        pyramid.drawpyramid()
         pygame.display.flip()
 
 
