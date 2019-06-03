@@ -5,7 +5,7 @@ from math import atan2
 
 class Room:
 
-    x = 1
+    x = 2
     y = 1
     z = 2
 

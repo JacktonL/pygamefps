@@ -29,6 +29,13 @@ class Pyramid(Room):
 
         )
 
+        self.psurfaces = (
+            (1, 0, 4),
+            (2, 1, 4),
+            (3, 2, 4),
+            (3, 0, 4)
+        )
+
         self.pvertices = np.array(np.multiply(np.array(self.pvertices), self.mul))
         Pyramid.randtransform(self)
 
@@ -45,6 +52,13 @@ class Pyramid(Room):
                                                 vert[2] + randposz), self.pvertices))
 
     def drawpyramid(self):
+        glBegin(GL_QUADS)
+        glColor3fv((1, 1, 0))
+        for surface in self.psurfaces:
+            for vertex in surface:
+                glVertex3fv(self.pvertices[vertex])
+        glEnd()
+
         glLineWidth(3)
         glBegin(GL_LINES)
         for edge in self.pedges:
