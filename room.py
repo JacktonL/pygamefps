@@ -5,11 +5,11 @@ from math import atan2
 
 class Room:
 
-    x = 2
-    y = 1
-    z = 2
+    x = 3
+    y = 2
+    z = 3
 
-    num = 10
+    num = 20
 
     grid = [
         [x, 0, z],
@@ -108,7 +108,7 @@ class Room:
 
     def surface(self, e1, e2, color):
         glColor3fv(color)
-        for i in range(10):
+        for i in range(Room.num):
             for j in (e1, e2):
                 glVertex3fv(self.mesh[j][i])
 

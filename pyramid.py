@@ -53,7 +53,7 @@ class Pyramid(Room):
 
     def drawpyramid(self):
         glBegin(GL_QUADS)
-        glColor3fv((1, 1, 0))
+        glColor3fv((1, 1, 1))
         for surface in self.psurfaces:
             for vertex in surface:
                 glVertex3fv(self.pvertices[vertex])

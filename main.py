@@ -16,7 +16,8 @@ def main():
     pygame.mouse.set_pos(size / 2, size / 2)
     room = Room()
     player = Player()
-    pyramid = Pyramid()
+    pyramid1 = Pyramid()
+    pyramid2 = Pyramid()
 
     clock = pygame.time.Clock()
     exit = True
@@ -110,7 +111,8 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         room.drawroom()
         room.draw()
-        pyramid.drawpyramid()
+        pyramid1.drawpyramid()
+        pyramid2.drawpyramid()
         pygame.display.flip()
 
 

@@ -12,7 +12,7 @@ class Player(Room):
         self.pos = [0, self.starty, 0]
         self.jumpvel = 30
         self.relvel = self.jumpvel
-        gluPerspective(fov, (display[0] / display[1]), 0.1, 5000)
+        gluPerspective(fov, (display[0] / display[1]), 0.1, 10000)
         glTranslatef(0, -self.starty, 0)
         Room.__init__(self)
 
