@@ -5,9 +5,9 @@ from math import atan2
 
 class Room:
 
-    x = 3
+    x = 2
     y = 2
-    z = 3
+    z = 4
 
     num = 20
 
@@ -70,11 +70,18 @@ class Room:
         self.mul = 800
         self.mulx = Room.x*self.mul
         self.mulz = Room.z*self.mul
+        self.muly = Room.y*self.mul
         self.mesh = list(np.multiply(np.array(Room.mesh), self.mul))
         self.colors = Room.colors
         self.edges = Room.edges
         self.grid = list(np.multiply(np.array(Room.grid), self.mul))
         self.cont = self.grid
+
+    def move(self, x, y, z):
+
+        self.mesh = list(map(lambda vert: (x - vert[0],
+                                           y - vert[1],
+                                           z - vert[2]), self.mesh))
 
     def draw(self):
         glLineWidth(3)
@@ -97,8 +104,8 @@ class Room:
         Room.surface(self, 1, 5, (0, 1, 0))
         Room.surface(self, 2, 6, (0, 1, 0))
         Room.surface(self, 3, 7, (0, 1, 0))
-        Room.surface(self, 4, 6, (1, 0, 0))
-        Room.surface(self, 5, 7, (1, 0, 0))
+        Room.surface(self, 4, 6, (1, 0.8, 0.8))
+        Room.surface(self, 5, 7, (1, 0.8, 0.8))
         Room.surface(self, 8, 9, (0, 1, 0))
         Room.surface(self, 9, 10, (0, 1, 0))
         Room.surface(self, 10, 11, (0, 1, 0))
